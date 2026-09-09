@@ -240,7 +240,8 @@ def report(market, stake, with_depth=True):
 
 def print_handoff(market):
     slug = event_slug(market)
-    print("\n  → open the buy sheet on this market:")
+    print("\n  → deeplink args for this market (NOTE: prediction-deeplink is")
+    print("    EXPIRED — the arg shape below is still right, the script is not):")
     print("     python3 ../prediction-deeplink/scripts/prediction_deeplink.py \\")
     print(f"       {market.get('conditionId')} \\")
     if slug:

@@ -1,9 +1,23 @@
 ---
 name: prediction-deeplink
-description: Use when you need to open a prediction market's Buy or Sell bottom sheet directly on a simulator/emulator instead of tapping through the app — reproducing a QA or backend bug on a specific market, checking a header or price renders right, or just getting the deeplink URL to hand someone. Takes a CTF condition id or event slug (typically from the find-prediction-market skill), verifies the market is still worth opening, builds the URL, and can fire it at a booted device.
+description: EXPIRED — do not use. This skill has drifted from the app build it targets and is kept only as a historical reference for the deeplink URL anatomy. Do not load it to open a sheet on a device, to build a deeplink URL, or to reproduce a bug on a market — the script emits URLs that are wrong on at least one current build variant. There is no maintained public replacement.
 ---
 
-# Prediction Deeplink
+# Prediction Deeplink — EXPIRED
+
+> **⚠️ EXPIRED — do not rely on this skill.**
+>
+> Retired by the maintainer. Treat it as a historical reference, not a working tool.
+>
+> A spot-check against a newer private version found most of this still accurate:
+> the `dfw://cronos/reactnative/bottomsheet` shape, the per-build-variant scheme
+> handling, and the `PredictionMarketSheet` / `SellJourneySheet` keys with the
+> argument contracts documented below all still match. The one concrete gap found is
+> a third sheet in this family that exists now and is missing here.
+>
+> That gap is narrow, so whatever retired this is probably not visible in the
+> script — assume the app has moved in some way this write-up does not capture, and
+> verify against the app before trusting any URL it builds.
 
 The app routes every screen through a deeplink, so a bottom sheet can be opened
 directly — no Discovery → Sports → find the card. That turns "go reproduce this

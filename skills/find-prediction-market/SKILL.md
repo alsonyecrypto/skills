@@ -47,9 +47,10 @@ python3 scripts/find_markets.py --check <conditionId|marketId|slug>
 | `--min-ask P` | 0.10 | Lower it to allow cheaper longshots. |
 | `--top N` | 8 | How many candidates get a live book fetch. |
 
-Each candidate prints its **`conditionId`** and **event slug**, which is what the
-`prediction-deeplink` skill needs — the last line of the output is a ready
-command.
+Each candidate prints its **`conditionId`** and **event slug**. The last line of
+the output is a ready `prediction-deeplink` command — but **that skill is
+expired**, so treat the printed command as a record of the argument shape rather
+than something to run.
 
 ### Read the depth line before committing to a pick
 
@@ -116,5 +117,6 @@ These are the non-obvious parts, all verified against the live API:
 
 ## Related
 
-- `prediction-deeplink` — takes the `conditionId` and event slug this skill
-  prints and opens the buy or sell sheet on a device.
+- `prediction-deeplink` — **expired.** It took the `conditionId` and event slug
+  this skill prints and opened the buy or sell sheet on a device. Kept only as a
+  reference for the deeplink argument shape; the script no longer matches the app.

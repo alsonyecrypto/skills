@@ -1,12 +1,12 @@
 # skills
 
 Claude Code skills I use, in two pairs. Each pair is designed to hand off
-internally.
+internally — though one half of the prediction pair has expired, marked below.
 
 | Skill | Job |
 |---|---|
 | [`find-prediction-market`](skills/find-prediction-market) | Find a live Polymarket market that survives a real order — screening on negRisk, fee schedule, book depth and the share floor, not just "is it open". Also checks whether a market id you already have has gone stale. |
-| [`prediction-deeplink`](skills/prediction-deeplink) | Open that market's Buy or Sell bottom sheet straight on a simulator, or just print the deeplink URL. |
+| [`prediction-deeplink`](skills/prediction-deeplink) | **⚠️ Expired.** Opened that market's Buy or Sell bottom sheet straight on a simulator. It has drifted from the app build it targets — kept as a reference for the deeplink URL anatomy, not as a working tool. |
 | [`context-to-tickets`](skills/context-to-tickets) | Turn a Slack thread (or a pile of pasted context) into a reviewed set of Jira tickets under a parent epic — split into separate issues and research items, deduped against what's already filed, and held at an approval gate before anything is written. |
 | [`jira-ticket`](skills/jira-ticket) | File one well-formed ticket: platform-tagged title, structured description for whoever does the fix, and a short human-read first comment with screenshots embedded inline. |
 
@@ -25,10 +25,12 @@ Skills live in `~/.claude/skills/`. Symlink so a `git pull` updates them:
 ```bash
 git clone https://github.com/alsonyecrypto/skills.git ~/skills
 ln -s ~/skills/skills/find-prediction-market ~/.claude/skills/find-prediction-market
-ln -s ~/skills/skills/prediction-deeplink    ~/.claude/skills/prediction-deeplink
 ln -s ~/skills/skills/context-to-tickets     ~/.claude/skills/context-to-tickets
 ln -s ~/skills/skills/jira-ticket            ~/.claude/skills/jira-ticket
 ```
+
+`prediction-deeplink` is deliberately not in that list — it is expired. Read it in
+the repo if you want the URL anatomy; don't install it.
 
 Or copy the directories if you'd rather pin a version.
 
@@ -56,23 +58,17 @@ negRisk false · fees enabled · ends >= 90d · ask >= 0.1 · $2 clears orderMin
       asks: 76 levels, $143,039 total, $2,306 at the top level
 ```
 
-Then open it:
+Then open it — **this half of the handoff is expired.** `prediction-deeplink` is
+retired; the URL shape it documents still matches a newer private version:
 
-```bash
-$ python3 ~/skills/skills/prediction-deeplink/scripts/prediction_deeplink.py \
-    0x9cb23d04b2ded06147482076688b69b487a8d982c63ebdda2ab3678cf27cf390 \
-    --side no --open ios
-
-Clarity Act (H.R.3633) signed into law in 2026?
-    · NO ask 0.7700 (gamma yes-side: bestAsk 0.24 / bestBid 0.23)
-    · the buy CTA should read ~77% for NO — that is the positive tell the args arrived. A right header with a wrong percent means a stale mount
-    · fees on (politics_fees, rate 0.04)
-    · ends 2027-01-01T05:00:00Z
-
-dfw://cronos/reactnative/bottomsheet?conditionId=0x9cb23d04b2ded06147482076688b69b487a8d982c63ebdda2ab3678cf27cf390&side=no&eventId=clarity-act-signed-into-law-in-2026&moduleName=PredictionMarketSheet
+```
+dfw://cronos/reactnative/bottomsheet?conditionId=0x9cb23d04…&side=no&eventId=clarity-act-signed-into-law-in-2026&moduleName=PredictionMarketSheet
 ```
 
-`find_markets.py` prints that second command for you as its last line.
+…but it is missing a sheet that now exists in this family, and it is no longer
+verified against the app. `find_markets.py` still prints a ready command as its
+last line — read it for the argument shape, and check the URL against the app
+before firing it.
 
 ## The Jira handoff
 
@@ -143,5 +139,6 @@ the API behaviour above.
 
 `prediction-deeplink` builds `dfw://cronos/...` URLs, which target a specific
 React Native host app. The URL shape, the page keys and the argument contracts are
-all in the skill, so adapting it to another RN app is mostly a matter of swapping
-the scheme and the two page keys in `SHEETS`.
+all still written up in the skill, so adapting it to another RN app — or catching
+it back up — is mostly a matter of swapping the scheme and the page keys in
+`SHEETS`.
